@@ -6,11 +6,10 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class textArea extends JFrame {
+public class itmApplication extends JFrame {
 
 
     //layout manager
@@ -19,7 +18,7 @@ public class textArea extends JFrame {
     public static JTextArea textArea;
     JScrollPane scrollPane;
     JSpinner fontSizeSpinner;
-    Font defaultFont = new Font("Arial",Font.BOLD,14);
+    Font defaultFont = new Font("Arial",Font.BOLD,20);
 
     public static JRadioButton itm_6091;
     public static JRadioButton itm_6090;
@@ -34,14 +33,15 @@ public class textArea extends JFrame {
     ActionListener buttonActionListener;
 
 
-    public textArea(ActionListener buttonActionListener) throws HeadlessException {
+    public itmApplication(ActionListener buttonActionListener) throws HeadlessException {
         this.buttonActionListener = buttonActionListener;
         //using MigLayout as my layout manager
-        mainMigPanel = new MigLayout("wrap, inset 35 45 30 45, flowy, fill","[center]10[center]");
+        mainMigPanel = new MigLayout("wrap, inset 10 , flowy, fill","[center]10[center]");
 
         JPanel mainPanel = new JPanel(mainMigPanel);
-        leftPanel = new JPanel(new MigLayout("wrap, fillx, insets 10","","[]10[500,500]"));
-        rightPanel = new JPanel(new MigLayout("wrap,fill, insets 10","","[]25[]"));
+
+        leftPanel = new JPanel(new MigLayout("wrap, fill, insets 5 ","","[]10[500,500]"));
+        rightPanel = new JPanel(new MigLayout("wrap,fill, insets 5","","[]25[]"));
 
         mainPanel.add(leftPanel);
         mainPanel.add(rightPanel);
