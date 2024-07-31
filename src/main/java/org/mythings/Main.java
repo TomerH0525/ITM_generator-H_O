@@ -1,17 +1,12 @@
 package org.mythings;
 
-import org.mythings.swingBeans.textArea;
+import org.mythings.swingBeans.itmApplication;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Properties;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class Main {
 
@@ -33,14 +28,28 @@ public class Main {
         ActionListener buttonActionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (textArea.itm_6089.isSelected()){
+                if (itmApplication.itm_6089.isSelected()){
                     System.out.println("blah blah");
-                } else if (textArea.itm_6090.isSelected()) {
+                } else if (itmApplication.itm_6090.isSelected()) {
                     System.out.println("yada yada");
                 }else {
-                    HashSet<String> teodotSH = new HashSet<>();
-                    textArea.textArea.getText().lines().forEach(teodotSH::add);
-                    System.out.println(Arrays.toString(teodotSH.toArray()));
+
+                    HashMap<String,String> teodotSH = new HashMap<>();
+                    itmApplication.textArea.getText().lines().forEach(string -> {
+                        if (string.isBlank() || string.isEmpty()){
+                            System.out.println("no text was found in textArea !!!");
+                        }else {
+                            String[] stringList = string.split("\t");
+                            System.out.println(Arrays.toString(stringList));
+                            if (stringList.length < 2){
+                                System.out.println("אין מחסן שולח!");
+                            }else teodotSH.put(stringList[0],stringList[1]);
+                        }
+                    });
+//                    if (teodotSH)
+                    teodotSH.forEach((key,value) -> {
+                        System.out.println("key = "+key+"\nvalue = "+value);
+                    });
                     JFileChooser saveLocationChooser = new JFileChooser();
                     saveLocationChooser.setCurrentDirectory(new File("."));
 
@@ -53,7 +62,7 @@ public class Main {
             }
         };
 
-        new textArea(buttonActionListener);
+        new itmApplication(buttonActionListener);
     }
 
         //trying to set lookAndFeel to be like the current system native look and feel.
