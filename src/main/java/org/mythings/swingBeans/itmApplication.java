@@ -36,12 +36,12 @@ public class itmApplication extends JFrame {
     public itmApplication(ActionListener buttonActionListener) throws HeadlessException {
         this.buttonActionListener = buttonActionListener;
         //using MigLayout as my layout manager
-        mainMigPanel = new MigLayout("wrap, inset 10 , flowy, fill","[center]10[center]");
+        mainMigPanel = new MigLayout("wrap, inset 20 , flowy, fill","[center]10[center]");
 
         JPanel mainPanel = new JPanel(mainMigPanel);
 
-        leftPanel = new JPanel(new MigLayout("wrap, fill, insets 5 ","","[]10[500,500]"));
-        rightPanel = new JPanel(new MigLayout("wrap,fill, insets 5","","[]25[]"));
+        leftPanel = new JPanel(new MigLayout("wrap, fill, insets 5 ","","[]10[200,500]"));
+        rightPanel = new JPanel(new MigLayout("wrap,fill, insets 5,","","[]25[]"));
 
         mainPanel.add(leftPanel);
         mainPanel.add(rightPanel);
@@ -67,18 +67,15 @@ public class itmApplication extends JFrame {
 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-        fontSizeSpinner = new JSpinner();
-        fontSizeSpinner.setPreferredSize(new Dimension(50,25));
-        fontSizeSpinner.setValue(14);
-        fontSizeSpinner.addChangeListener(new ChangeListener() {
-
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                textArea.setFont(new Font(textArea.getFont().getFamily(),Font.BOLD, (int) fontSizeSpinner.getValue()));
-
-            }
-
-        });
+        JTextPane textAreaLabel = new JTextPane();
+        textAreaLabel.setText(
+                "יש להזין מספרי תעודות ומחסן שולח בסדר הבא:\n" +
+                        "מספר תעודת משלוח ואז טאב (TAB) ומחסן שולח\n\n" +
+                        "ניתן להעתיק מקובץ אקסל 2 עמודות ולהדביק במכה אחת\n" +
+                        "עמודה ראשונה תהיה תעודה משלוח \nועמודה שניה מחסן שולח"
+        );
+        textAreaLabel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        textAreaLabel.setEditable(false);
 
 
         itm_6091 = new JRadioButton("6091");
@@ -97,7 +94,7 @@ public class itmApplication extends JFrame {
 
 
 
-        leftPanel.add(fontSizeSpinner,"center");
+        leftPanel.add(textAreaLabel,"center,wrap,span 2");
         leftPanel.add(scrollPane,"grow");
 
         rightPanel.add(itmChooserLabel);
