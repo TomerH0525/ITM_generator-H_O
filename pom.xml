@@ -11,17 +11,40 @@
     <build>
         <plugins>
             <plugin>
-                <!-- Build an executable JAR -->
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>org.mythings.Main</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>create-my-bundle</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <archive>
+                                <manifest>
+                                    <mainClass>org.mythings.Main</mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
+
+<!--            <plugin>-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>-->
+<!--                    <artifactId>maven-assembly-plugin</artifactId>-->
+<!--                    <configuration>-->
+<!--                        <archive>-->
+<!--                            <manifest>-->
+<!--                                <mainClass>org.mythings.Main</mainClass>-->
+<!--                            </manifest>-->
+<!--                        </archive>-->
+<!--                    </configuration>-->
+<!--                </plugin>-->
         </plugins>
     </build>
 
@@ -36,8 +59,8 @@
     </dependencies>
     <properties>
 
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
