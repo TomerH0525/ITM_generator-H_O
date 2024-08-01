@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Main {
@@ -13,7 +14,8 @@ public class Main {
     public static String osUser = System.getProperty("user.name");
     public static File userSelectedFile;
     public static FileInputStream propertiesStream;
-    public static BufferedWriter bw;
+    public static String currentDatePattern = "yyyyMMdd";
+
 
     public static void main(String[] args) {
 
@@ -28,8 +30,16 @@ public class Main {
         ActionListener buttonActionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //creating current date for file name using currently set pattern
+                SimpleDateFormat sdf = new SimpleDateFormat(currentDatePattern);
+                String currentDate = sdf.format(new Date());
                 if (itmApplication.itm_6089.isSelected()){
-                    System.out.println("blah blah");
+                    Calendar calendar = new GregorianCalendar();
+                    System.out.println(calendar);
+//                    SimpleDateFormat sdf = new SimpleDateFormat();
+                    sdf.applyPattern("yyyyMMdd");
+                    System.out.println(sdf.format(new Date()));
+
                 } else if (itmApplication.itm_6090.isSelected()) {
                     System.out.println("yada yada");
                 }else {
@@ -46,18 +56,32 @@ public class Main {
                             }else teodotSH.put(stringList[0],stringList[1]);
                         }
                     });
-//                    if (teodotSH)
+                    final BufferedWriter[] bw = {null};
+                    if (!teodotSH.isEmpty()){
                     teodotSH.forEach((key,value) -> {
                         System.out.println("key = "+key+"\nvalue = "+value);
+                        try {
+                            bw[0] = new BufferedWriter(new FileWriter("ITM_"+itmApplication.itm_6091.getText()+"_"+currentDate+"_"+key+".txt"));
+                            bw[0].write("6091\t"+key+"\tמשטח לאחסנה\t\t\t\t\t\t1\t1\t1\tAVAILABLE\t\tEACH\t\t2\t1.92\tStorage\t"+value+"\t"+key+"\t\t");
+                            bw[0].close();
+                            JOptionPane.showMessageDialog(null,"Created Successfully.");
+                            itmApplication.textArea.setText("");
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        } finally {
+
+                        }
                     });
-                    JFileChooser saveLocationChooser = new JFileChooser();
-                    saveLocationChooser.setCurrentDirectory(new File("."));
 
-                    int response = saveLocationChooser.showSaveDialog(null);
-                    if (response == JFileChooser.APPROVE_OPTION){
+//                        "6091\t"+teoda+"\tמשטח לאחסנה\t\t\t\t\t\t1\t1\t1\tAVAILABLE\t\tEACH\t\t2\t1.92\tStorage\t"+mahsan+"\t"+teoda+"\t\t"
+//                    JFileChooser saveLocationChooser = new JFileChooser();
+//                    saveLocationChooser.setCurrentDirectory(new File("."));
+//
+//                    int response = saveLocationChooser.showSaveDialog(null);
+//                    if (response == JFileChooser.APPROVE_OPTION){
 
 
-                    }
+                    }else JOptionPane.showMessageDialog(null,"לא נרשמו תעודות...");
                 }
             }
         };
